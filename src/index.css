@@ -1,9 +1,9 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  background-color: #03082f;
+  background-color:black;
 }
 
 @font-face {
@@ -33,153 +33,99 @@
 }
 
 @layer utilities {
-  .hero-bg-gradient {
-    background: linear-gradient(
-        180deg,
-        rgba(3, 8, 47, 0) 36.62%,
-        rgba(3, 8, 47, 0.62) 102.13%
-      ),
-      linear-gradient(
-        270deg,
-        rgba(12, 2, 24, 0) 81.51%,
-        rgba(12, 2, 24, 0) 81.51%,
-        rgba(12, 2, 24, 0.9) 100%
-      ),
-      linear-gradient(
-        90deg,
-        rgba(12, 2, 24, 0) 81.04%,
-        rgba(12, 2, 24, 0.9) 100%
-      ),
-      linear-gradient(180deg, rgba(12, 2, 24, 0) 44.4%, #0c0218 89.86%);
-  }
-  .video-bg-gradient {
-    background: linear-gradient(
-        180deg,
-        rgba(3, 8, 47, 0) 36.62%,
-        rgba(3, 8, 47, 0.62) 102.13%
-      ),
-      linear-gradient(
-        270deg,
-        rgba(12, 2, 24, 0) 81.51%,
-        rgba(12, 2, 24, 0) 81.51%,
-        rgba(12, 2, 24, 0.9) 100%
-      ),
-      linear-gradient(
-        90deg,
-        rgba(12, 2, 24, 0) 81.04%,
-        rgba(12, 2, 24, 0.9) 100%
-      ),
-      linear-gradient(180deg, rgba(12, 2, 24, 0) 44.4%, #0c0218 89.86%);
-  }
-  .mrback-bg-gradient {
-    background: linear-gradient(
-        180deg,
-        rgba(3, 8, 47, 0) 36.62%,
-        rgba(3, 8, 47, 0.62) 102.13%
-      ),
-      linear-gradient(
-        270deg,
-        rgba(12, 2, 24, 0) 81.51%,
-        rgba(12, 2, 24, 0) 81.51%,
-        rgba(12, 2, 24, 0.9) 100%
-      ),
-      linear-gradient(
-        90deg,
-        rgba(12, 2, 24, 0) 81.04%,
-        rgba(12, 2, 24, 0.9) 100%
-      ),
-      linear-gradient(180deg, rgba(12, 2, 24, 0) 44.4%, #0c0218 89.86%);
-  }
-  .mrback1-bg-gradient {
-    background: linear-gradient(
-        180deg,
-        rgba(3, 8, 47, 0) 36.62%,
-        rgba(3, 8, 47, 0.62) 102.13%
-      ),
-      linear-gradient(
-        270deg,
-        rgba(12, 2, 24, 0) 81.51%,
-        rgba(12, 2, 24, 0) 81.51%,
-        rgba(12, 2, 24, 0.9) 100%
-      ),
-      linear-gradient(
-        90deg,
-        rgba(12, 2, 24, 0) 81.04%,
-        rgba(12, 2, 24, 0.9) 100%
-      ),
-      linear-gradient(180deg, rgba(12, 2, 24, 0) 44.4%, #0c0218 89.86%);
-  }
-  .supportbg-bg-gradient {
-    background: linear-gradient(
-        180deg,
-        rgba(3, 8, 47, 0) 36.62%,
-        rgba(3, 8, 47, 0.62) 102.13%
-      ),
-      linear-gradient(
-        270deg,
-        rgba(12, 2, 24, 0) 81.51%,
-        rgba(12, 2, 24, 0) 81.51%,
-        rgba(12, 2, 24, 0.9) 100%
-      ),
-      linear-gradient(
-        90deg,
-        rgba(12, 2, 24, 0) 81.04%,
-        rgba(12, 2, 24, 0.9) 100%
-      ),
-      linear-gradient(180deg, rgba(12, 2, 24, 0) 44.4%, #0c0218 89.86%);
-  }
-
-
-  .bgpatch-bg-gradient {
-    background: linear-gradient(
-        180deg,
-        rgba(3, 8, 47, 0) 36.62%,
-        rgba(3, 8, 47, 0.62) 102.13%
-      ),
-      linear-gradient(
-        270deg,
-        rgba(12, 2, 24, 0) 81.51%,
-        rgba(12, 2, 24, 0) 81.51%,
-        rgba(12, 2, 24, 0.9) 100%
-      ),
-      linear-gradient(
-        90deg,
-        rgba(12, 2, 24, 0) 81.04%,
-        rgba(12, 2, 24, 0.9) 100%
-      ),
-      linear-gradient(180deg, rgba(12, 2, 24, 0) 44.4%, #0c0218 89.86%);
-  }
-  .font-outline {
-    -webkit-text-stroke: 2px transparent;
-  }
-
-  .game-chips-bg {
-    background: linear-gradient(98deg, #3f107a 10.09%, #740fb1 100.25%),
-      linear-gradient(
-        255deg,
-        rgba(87, 24, 109, 0.62) 4.37%,
-        rgba(42, 13, 78, 0.62) 99.01%
-      ),
-      rgba(45, 44, 134, 0.8);
-  }
-   
-  .testimonials-first{
-    background: linear-gradient(175deg, rgba(144, 55, 166, 0.00) 42.93%, rgba(144, 55, 166, 0.32) 70.97%, rgba(144, 55, 166, 0.36) 96.35%);
-  }
- .testimonials{
-  background: linear-gradient(180deg, rgba(23, 19, 82, 0.96) 0%, #0A0917 100%), url(<path-to-image>) lightgray 50% / cover no-repeat;
- }
- .testimonials-second{
-  background: rgba(2, 4, 24, 0.11);
- }
- .crousel-first{
-  border-radius: 35.233px;
-  border: 1.174px solid #3F3F7A;
-  background: #11113A;
-  box-shadow: 0px 4.698px 46.978px 0px rgba(10, 9, 23, 0.60);
- } 
- .glow {
-  box-shadow: 0 0px 20px rgba(152, 255, 249, 1), 0px 0px 20px rgba(72, 102, 169, 0.4), 0px 0px 30px rgba(72, 102, 169, 0.4);
-}
  
+ 
+} */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  background-color:black;
 }
+@font-face {
+  font-family: 'Colus';
+  src:
+    local('Colus'),
+    url('./assets/fonts/colus/Colus-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Michroma';
+  src:
+    local('Michroma'),
+    url('./assets/fonts/michroma/Michroma-Regular.ttf') format('truetype');
+}
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+

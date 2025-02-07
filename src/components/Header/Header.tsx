@@ -1,373 +1,68 @@
-import mcLogo from '@/assets/images/magiccraft-logo.webp'
-import { ArrowUpRight, X } from 'lucide-react'
-import NavMenu from './Navmenu'
-import menuIcon from '@/assets/icons/menu-icon.svg'
-import { useState } from 'react'
-import NavMenuMobile from './NavMenuMobile'
-import { AnimatePresence, motion } from 'framer-motion'
-import Referral from'@/assets/icons/Referral.svg'
-import Whitepaper from '@/assets/icons/whitepaper.svg'
-import lobby from '@/assets/icons/lobby.svg'
-import service from '@/assets/icons/li_shopping-bag.svg'
 
-export type NavMenuItemProps = {
-  path?: string
-  title: string
-  icon: string
-  notBlank?: boolean
-  submenu: SubMenuProps[]
-}
 
-export type NavMenuProps = {
-  item: NavMenuItemProps
-  closeSidebar?: () => void
-}
+"use client"
 
-export type SubMenuProps = {
-  title: string
-  icon: string
-  path: string
-}
+import { Menu } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheets"
+import { CartSheet } from "../cartSheet"
+import logo from "@/assets/images/logo.png"
 
-const commonMenuItemsNew: NavMenuItemProps[] = [
-  
-  {
-    title: 'Games',
-    icon: './icons/icon-gamepad.svg',
-    submenu: [
-      {
-        title: 'MagicCraft',
-          icon: 'https://res.cloudinary.com/dfzcr2ch4/image/upload/v1717331155/mcrt-icon_oewidv.webp',
-          path: '/magiccraft',
-        
-      },
-      {
-        title: 'Browser Games',
-          icon: 'https://res.cloudinary.com/dfzcr2ch4/image/upload/v1717331155/mcrt-icon_oewidv.webp',
-          path: 'https://games.magiccraft.io/',
-        
-      },
-      {
-        title: 'MagicRunner',
-        icon: 'https://res.cloudinary.com/dfzcr2ch4/image/upload/v1717173132/hero2_olqlpn.webp',
-        path: '/magicrunner',
-      },
-      {
-        title: 'Magic8Ball',
-        icon: 'https://res.cloudinary.com/dfzcr2ch4/image/upload/v1717662849/Screenshot_2024-01-05_at_15.03_1_x8sbyh.png',
-        path: '/magic8ball',
-      },
-      {
-        title: 'Build on MagicCraft',
-        icon: 'https://res.cloudinary.com/dfzcr2ch4/image/upload/v1717331155/mcrt-icon_oewidv.webp',
-        path: '/build-on-magiccraft',
-      },
-     
-    ],
-  },
-  {
-      title: 'Dapp',
-      icon: service,
-      submenu: [
-        {
-          title: 'Web3 Lobbies',
-          icon: lobby,
-          path: 'https://lobby.magiccraft.io/',
-        },
-        {
-          title: 'Marketplace',
-          icon: './icons/icon-marketplace.svg',
-          path: 'https://app.magiccraft.io/marketplace/explorer',
-        },
-        {
-          title: 'Pledging',
-          icon: './icons/icon-huobi.svg',
-          path: 'https://app.magiccraft.io/pledging',
-        },
-        {
-          title: 'Referral System',
-          icon: Referral,
-          path: 'https://lobby.magiccraft.io/referral',
-        },
-      ],
-    },
-    {
-      title: 'About',
-      icon: './icons/icon-help.svg',
-      submenu: [
-        // {
-        //   title: 'Heroes',
-        //   icon: '',
-        //   path: ' ',
-        // },
-        {
-          title: 'Whitepaper',
-          icon: Whitepaper,
-          path: 'https://docs.magiccraft.io/',
-        },
-        // {
-        //   title: 'Vision 2024',
-        //   icon: '',
-        //   path: '',
-        // },
-        // {
-        //   title: 'Legal',
-        //   icon: '',
-        //   path: '',
-        // },
-        {
-          title: 'FAQs',
-          icon: './icons/icon-faq.svg',
-          path: '/faq',
-        },
-        // {
-        //   title: 'Contact Us',
-        //   icon: './icons/icon-contact.svg',
-        //   path: 'https://magiccraft.io/contact-us',
-        // },
-        
-        
-      ],
-    },
-    {
-      title: 'Buy $MCRT',
-      icon: './icons/icon-currency.svg',
-      submenu: [
-        {
-          title: 'PancakeSwap',
-          icon: './icons/icon-pancakeswap.svg',
-          path: 'https://pancakeswap.finance/swap?outputCurrency=0x4b8285aB433D8f69CB48d5Ad62b415ed1a221e4f ',
-        },
-        {
-          title: 'Bybit',
-          icon: './icons/icon-bybit.svg',
-          path: 'https://www.bybit.com/en/trade/spot/MCRT/USDT',
-        },
-        {
-          title: 'Huobi Global',
-          icon: './icons/icon-huobi.svg',
-          path: 'https://www.huobi.com/en-us/exchange/mcrt_usdt',
-        },
-        {
-          title: 'Buy with credit card',
-          icon: 'https://res.cloudinary.com/dfzcr2ch4/image/upload/v1718968472/648bac0dcb1a13d71ac879ff_Swipelux-Twitter_gfxxae.webp',
-          path: 'https://track.swipelux.com/?api-key=c2c64eeb-d657-4692-99de-568f1c822c12',
-        },
-      ],
-    },
 
-  // {
-  //   title: 'NFTs',
-  //   icon: './icons/icon-nft-new.svg',
-  //   submenu: [
-  //     {
-  //       title: 'Marketplace',
-  //       icon: './icons/icon-marketplace.svg',
-  //       path: 'https://app.magiccraft.io/marketplace/explorer',
-  //     },
-  //     {
-  //       title: 'Mint NFTs',
-  //       icon: './icons/icon-mint-nft.svg',
-  //       path: 'https://app.magiccraft.io/nft_mint',
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: 'Pledging',
-  //   icon: './icons/icon-pledging-new.svg',
-  //   path: 'https://app.magiccraft.io/pledging',
-  //   submenu: [],
-  // },
-  
-  // {
-  //   title: 'Help',
-  //   icon: './icons/icon-help.svg',
-  //   submenu: [
-  //     {
-  //       title: 'FAQ',
-  //       icon: './icons/icon-faq.svg',
-  //       path: '/faq',
-  //     },
-  //     {
-  //       title: 'Contact us',
-  //       icon: './icons/icon-contact.svg',
-  //       path: 'https://magiccraft.io/contact-us',
-  //     },
-  //     {
-  //       title: 'Community',
-  //       icon: './icons/icon-community.svg',
-  //       path: 'https://t.me/magiccraftgamechat',
-  //     },
-  //   ],
-  // },
-  {
-    title: 'Statistics',
-    icon: './icons/icon-stats.svg',
-    submenu: [
-      {
-        title: 'Leaderboard',
-        icon: './icons/icon-leaderboard.svg',
-        path: 'https://lobby.magiccraft.io/leaderboard',
-      },
-      {
-        title: 'Game stats',
-        icon: './icons/icon-gamestats.svg',
-        path: 'https://lobby.magiccraft.io/stats',
-      },
-    ],
-  },
- ]
 
-const Header = () => {
-  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
 
-  function closeSidebar() {
-    setIsSideMenuOpen(false)
-    document.body.style.overflow = 'unset'
-  }
+const navigation = [
+  { name: "About us", href: "/" },
+ 
+  { name: "Product", href: "#product" },
+  { name: "Features", href:"#features" },
+  { name: "Contact", href: "#contact" },
+]
 
-  function openSidebar() {
-    setIsSideMenuOpen(true)
-    if (typeof window != 'undefined' && window.document) {
-      document.body.style.overflow = 'hidden'
-    }
-  }
-
+export function SiteHeader() {
   return (
-    <>
-      {/* <header className="relative z-50 w-full px-3 py-4  md:px-4 md:py-5">
-        <nav className="flex items-center justify-between gap-4 rounded-xl bg-[#431269B2] md:gap-12">
-          <div className="grid shrink-0 place-items-center self-stretch  px-4  md:px-8 "> */}
-        <header className="relative z-50 w-full bg-[#0A091799] px-3 py-4 backdrop-blur-md md:px-4 md:py-3">
-        <nav className="flex items-center justify-between gap-4 rounded-xl bg-[#431269B2] md:gap-10 md:h-[60px]">
-          <div className="grid shrink-0 place-items-center self-stretch  bg-black/20 px-4  md:px-8 ">
-            <a href="/" rel="noreferrer noopener">
-              <img className="w-28 md:w-36" src={mcLogo} alt="MagicCraft" />
-            </a>
-          </div>
+    <header className="sticky top-0 z-50 w-full border-b bg-black">
+      <div className="container flex h-16 items-center">
+        <div className="flex w-full justify-between items-center gap-6 md:gap-10">
+          <a href="/" className="hidden md:flex text-white">
+           <img src={logo}/>
+          </a>
 
-          <div className="flex w-full items-center justify-end gap-12 py-4 pr-3 xl:justify-between">
-            <div className="hidden items-center gap-6 xl:flex">
-              {commonMenuItemsNew.map((item) =>
-                item?.submenu?.length > 0 ? (
-                  <NavMenu key={item.title} item={item} />
-                ) : (
-                  <a key={item.title} href={item.path || '/'}>
-                    <div className="flex items-center justify-center gap-2">
-                      <div className="hidden shrink-0 2xl:block">
-                        <img src={item.icon} alt={item.title} />
-                      </div>
-                      <p className="text-lg text-white">{item.title}</p>
-                    </div>
+          {/* Mobile Menu */}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" className="md:hidden text-white">
+                <Menu className="h-6 w-6" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="bg-black">
+              <div className="flex flex-col space-y-4 text-white">
+                {navigation.map((item) => (
+                  <a key={item.name} href={item.href} className="hover:text-emerald-400 transition-colors">
+                    {item.name}
                   </a>
-                )
-              )}
-            </div>
-            <div className="flex items-center gap-5">
-              <a
-                href="https://pancakeswap.finance/?outputCurrency=0x4b8285aB433D8f69CB48d5Ad62b415ed1a221e4f"
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                <div className="flex cursor-pointer items-center gap-2 whitespace-nowrap ">
-                  {/* <PlayCircle size={16} /> */}
-                  <p className="text-sm md:text-base"> Buy $MCRT</p>
-                </div>
-              </a>
-
-              <button className="hidden md:block">
-                <a
-                  href="https://lobby.magiccraft.io/"
-                  rel="noreferrer noopener"
-                >
-                  <div className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#98FFF9] px-5 py-3 text-[#03082F]">
-                    <ArrowUpRight size={18} />
-                    <p>Go to Lobby</p>
-                  </div>
-                </a>
-              </button>
-              <button
-                onClick={openSidebar}
-                className="block shrink-0 xl:hidden"
-              >
-                <span className="sr-only">Open Menu</span>
-                <img src={menuIcon} alt="Open Menu" />
-              </button>
-            </div>
-          </div>
-        </nav>
-      </header>
-      <AnimatePresence>
-        {isSideMenuOpen ? (
-          <header>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[999] h-full w-full bg-black/20 backdrop-blur"
-            />
-            <motion.nav
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'keyframes' }}
-              className="fixed right-0 top-0 z-[999] h-full w-[90%] max-w-lg overflow-auto rounded-bl-xl border-l border-[#9AD4FD] bg-gradient-to-b from-[#161242] to-[#060b31] py-6 pl-10 pr-10 text-white"
-            >
-              <div className="flex h-full flex-col gap-4">
-                <div className="flex items-center justify-between">
-                  <span className="font-serif text-[22px]">Menu</span>
-                  <X
-                    className="cursor-pointer"
-                    size={35}
-                    onClick={closeSidebar}
-                  />
-                </div>
-                <div className="h-[2px] w-full shrink-0 bg-gradient-to-r from-transparent via-[#5377BD] to-transparent" />
-
-                <div className="flex flex-col gap-y-8 pt-8">
-                  {commonMenuItemsNew.map((item) =>
-                    item?.submenu?.length > 0 ? (
-                      <NavMenuMobile
-                        key={item.title}
-                        item={item}
-                        closeSidebar={closeSidebar}
-                      />
-                    ) : (
-                      <a
-                        key={item.title}
-                        onClick={closeSidebar}
-                        href={item.path || '/'}
-                        rel="noreferrer noopener"
-                      >
-                        <div className="flex items-center gap-2">
-                          <div className="grid h-auto w-6 shrink-0 place-items-center">
-                            <img
-                              className="w-full"
-                              src={item.icon}
-                              alt={item.title}
-                            />
-                          </div>
-                          <p className="text-[22px] font-normal">
-                            {item.title}
-                          </p>
-                        </div>
-                      </a>
-                    )
-                  )}
-                </div>
-
-                <div className="pt-16">
-                  <div className="py-8 text-sm font-bold">
-                    &copy; Copyright MagicCraft 2024
-                  </div>
-                </div>
+                ))}
               </div>
-            </motion.nav>
-          </header>
-        ) : null}
-      </AnimatePresence>
-    </>
+            </SheetContent>
+          </Sheet>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-6 text-white">
+            {navigation.map((item, index) => (
+              <div key={item.name} className="flex items-center">
+                <a href={item.href} className="hover:text-emerald-400 transition-colors">
+                  {item.name}
+                </a>
+                {index < navigation.length - 1 && <span className="ml-6 text-gray-400">|</span>}
+              </div>
+            ))}
+          </nav>
+
+          <CartSheet />
+        </div>
+      </div>
+    </header>
   )
 }
 
-export default Header

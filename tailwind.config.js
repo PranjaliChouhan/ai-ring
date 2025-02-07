@@ -1,67 +1,59 @@
-/* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
-
-import defaultTheme from 'tailwindcss/defaultTheme'
-
 module.exports = {
-  darkMode: ['class'],
-  content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-  ],
-  prefix: '',
+  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   theme: {
     container: {
       center: true,
-      padding: '2rem',
+      padding: "2rem",
       screens: {
-        '2xl': '1400px',
+        "2xl": "1400px",
       },
     },
-
     extend: {
-      backgroundImage: {
-        hero: "url('https://res.cloudinary.com/dfzcr2ch4/image/upload/v1717180584/hero_w75tmm.webp')",
-        video:"url('https://res.cloudinary.com/dfzcr2ch4/video/upload/f_auto:video,q_auto/m2qegasybx2ts0picyhh')",
-        mrback: "url('https://res.cloudinary.com/dfzcr2ch4/image/upload/v1717173137/Hero_1_v7qidt.webp')",
-        mrback1: "url('https://res.cloudinary.com/dfzcr2ch4/image/upload/v1717173132/hero2_olqlpn.webp')",
-        supportbg: "url('https://res.cloudinary.com/dfzcr2ch4/image/upload/v1717173117/Image_w7qty5.webp')",
-        faqtab: "url('https://res.cloudinary.com/dfzcr2ch4/image/upload/v1717433825/Image_1_cqkad8.webp')",
-        bgpatch: "url('https://res.cloudinary.com/dfzcr2ch4/image/upload/v1717173211/bgpatch_nvhjfc.webp')",
-        bgpatch1: "url('https://res.cloudinary.com/dfzcr2ch4/image/upload/v1717482718/Image_1_1_ifmi0t.webp')",
-      },
-      keyframes: {
-        'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' },
-        },
-        'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
-        },
-      },
-      borderRadius: {
-        '4xl': '30px',
-      },
       colors: {
-        'custom-dark': '#0A0917',
-        'custom-light': 'rgba(68, 87, 184, 0.30)',
-        'tab-bg':'#21295C',
-        'custom-fade':'#fff',
-
-      },
-      fontFamily: {
-        sans: ['"Futura PT"', ...defaultTheme.fontFamily.sans],
-        serif: ["'Colus'", ...defaultTheme.fontFamily.serif],
-        ancient: ['"Font-The Ancient"', ...defaultTheme.fontFamily.serif],
-      },
-      animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        backgroundImage: {
+          "gradient-radial": "radial-gradient(circle, var(--tw-gradient-stops))",
+        },
+        fontFamily: {
+          michroma: ["Michroma", "sans-serif"], // Added Michroma font
+        },
+  
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [],
 }
+
