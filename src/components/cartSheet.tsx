@@ -1,6 +1,6 @@
 "use client"
 
-import { X, Store, ChevronLeft, ChevronRight, Trash2, ArrowRight } from "lucide-react"
+import {  Store, ChevronLeft, ChevronRight, Trash2, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useNavigate } from 'react-router-dom'
@@ -23,20 +23,20 @@ export function CartSheet() {
   const [items, setItems] = useState<CartItem[]>([
     {
       id: "1",
-      name: "T-shirt Uniqlu - Black Stone",
+      name: "Health-Ring",
       size: "M",
       price: 32,
       quantity: 1,
       image: ring,
     },
-    {
-      id: "2",
-      name: "Uniqlu Chino Pants - Black Stone",
-      size: "S",
-      price: 124,
-      quantity: 1,
-      image: ring,
-    },
+    // {
+    //   id: "2",
+    //   name: "Uniqlu Chino Pants - Black Stone",
+    //   size: "S",
+    //   price: 124,
+    //   quantity: 1,
+    //   image: ring,
+    // },
   ])
 
   const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0)
@@ -72,9 +72,9 @@ export function CartSheet() {
         <SheetHeader>
           <SheetTitle className="text-xl font-semibold text-white flex justify-between items-center">
             YOUR CART
-            <Button variant="ghost" size="icon" className="text-white" onClick={() => setIsOpen(false)}>
+            {/* <Button variant="ghost" size="icon" className="text-white" onClick={() => setIsOpen(false)}>
               <X className="h-6 w-6" />
-            </Button>
+            </Button> */}
           </SheetTitle>
         </SheetHeader>
 

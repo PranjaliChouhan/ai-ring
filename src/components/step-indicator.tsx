@@ -5,6 +5,7 @@ interface StepIndicatorProps {
   steps: number
 }
 
+
 export function StepIndicator({ currentStep, steps }: StepIndicatorProps) {
   return (
     <div className="flex items-center gap-2">

@@ -16,9 +16,9 @@ export function CartSidebar() {
     <div className="fixed right-0 top-0 h-screen w-[400px] border-l border-white/10 bg- p-6 backdrop-blur bg-[#132120] ">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold text-white">YOUR CART</h2>
-        <Button variant="ghost" size="icon" className="text-white" onClick={() => dispatch({ type: "CLOSE_SIDEBAR" })}>
+        {/* <Button variant="ghost" size="icon" className="text-white" onClick={() => dispatch({ type: "CLOSE_SIDEBAR" })}>
           <X className="h-6 w-6" />
-        </Button>
+        </Button> */}
       </div>
 
       <div className="mt-8">

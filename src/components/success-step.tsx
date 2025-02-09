@@ -65,7 +65,7 @@ export function SuccessStep() {
         <div className="flex justify-center gap-4">
         <Button onClick={() => navigate("/")} className="bg-emerald-400 hover:bg-emerald-500 text-black gap-2">
       <ArrowLeft className="w-4 h-4" />
-      Back to Shop
+      Back to Home
     </Button>
         </div>
 
