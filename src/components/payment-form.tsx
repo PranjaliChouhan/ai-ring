@@ -1,52 +1,70 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { StepIndicator } from "./step-indicator"
 
-export function PaymentForm({ onNext }: { onNext: () => void }) {
+interface PaymentFormProps {
+  isLoading?: boolean;
+  error?: string | null;
+  setError: (error: string | null) => void;
+  amount: number;
+}
+
+export const PaymentForm = ({ isLoading, error, setError, amount }: PaymentFormProps) => {
+  const handlePayment = async () => {
+    try {
+      const response = await fetch('https://lobby-api-prod.magiccraft.io/payment/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          line_items: [
+            {
+              price_data: {
+                currency: 'usd',
+                product_data: {
+                  name: 'Your Order',
+                },
+                unit_amount: amount * 100,
+              },
+              quantity: 1,
+            },
+          ],
+          success_url: `${window.location.origin}/checkout?step=3`,
+          cancel_url: `${window.location.origin}/checkout?step=2`,
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (!data.url) {
+        throw new Error('No checkout URL received');
+      }
+
+      window.location.href = data.url;
+    } catch (err) {
+      console.error('Error:', err);
+      setError(err instanceof Error ? err.message : 'Failed to create checkout session');
+    }
+  };
+
   return (
     <div className="mx-auto max-w-2xl px-4 py-4 sm:py-8">
       <StepIndicator currentStep={2} steps={3} />
-
       <h2 className="mt-4 sm:mt-8 text-2xl sm:text-3xl font-bold text-white">Payment Details</h2>
+      
+      {error && (
+        <div className="text-red-500 text-sm mt-4">{error}</div>
+      )}
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-          onNext()
-        }}
-        className="mt-4 sm:mt-8 space-y-4 sm:space-y-6"
+      <Button 
+        onClick={handlePayment}
+        className="mt-6 sm:mt-8 w-full bg-[#132120] text-emerald-400 rounded-full h-12 text-lg"
+        disabled={isLoading}
       >
-        <div className="space-y-2">
-          <label className="text-sm text-gray-400">Name on Card</label>
-          <Input placeholder="Alfonso Delarosa" className="bg-transparent text-white h-12" />
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-sm text-gray-400">Card Number</label>
-          <Input placeholder="1220-1289-9981-2987" className="bg-transparent text-white h-12" />
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4">
-          <div className="space-y-2">
-            <label className="text-sm text-gray-400">Month</label>
-            <Input placeholder="07" className="bg-transparent text-white h-12" />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm text-gray-400">Year</label>
-            <Input placeholder="2021" className="bg-transparent text-white h-12" />
-          </div>
-          <div className="space-y-2 col-span-2 sm:col-span-1">
-            <label className="text-sm text-gray-400">CVV</label>
-            <Input placeholder="520" type="password" className="bg-transparent text-white h-12" />
-          </div>
-        </div>
-
-        <Button type="submit" className="mt-6 sm:mt-8 w-full bg-[#132120] text-emerald-400 rounded-full h-12 text-lg">
-          Pay
-        </Button>
-      </form>
+        {isLoading ? 'Processing...' : 'Proceed to Payment'}
+      </Button>
     </div>
   )
 }

@@ -14,6 +14,8 @@
     "@radix-ui/react-dialog": "^1.1.5",
     "@radix-ui/react-icons": "^1.3.2",
     "@radix-ui/react-slot": "^1.0.2",
+    "@stripe/react-stripe-js": "^3.4.0",
+    "@stripe/stripe-js": "^6.0.0",
     "@swiper/core": "^0.0.21",
     "canvas-confetti": "^1.9.3",
     "class-variance-authority": "^0.7.0",
