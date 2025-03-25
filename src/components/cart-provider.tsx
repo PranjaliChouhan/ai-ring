@@ -3,11 +3,15 @@
 import { createContext, useContext, useReducer } from "react";
 import ring from "../assets/images/ring.png";
 
+// Available ring sizes
+export const RING_SIZES = ["7", "8", "9", "10", "11", "12"] as const;
+export type RingSize = typeof RING_SIZES[number];
+
 interface CartItem {
   id: string;
   name: string;
   price: number;
-  size: string;
+  size: RingSize;
   quantity: number;
   image: string;
 }
@@ -25,6 +29,7 @@ type CartAction =
   | { type: "ADD_ITEM"; payload: CartItem }
   | { type: "REMOVE_ITEM"; payload: string }
   | { type: "UPDATE_QUANTITY"; payload: { id: string; quantity: number } }
+  | { type: "UPDATE_SIZE"; payload: { id: string; size: RingSize } }
   | { type: "TOGGLE_SIDEBAR" }
   | { type: "CLOSE_SIDEBAR" };
 
@@ -39,7 +44,7 @@ const initialState: CartState = {
       id: "1",
       name: "Health Ring",
       price: 32,
-      size: "M",
+      size: "7" as RingSize,
       quantity: 1,
       image: ring,
     },
@@ -76,6 +81,12 @@ function cartReducer(state: CartState, action: CartAction): CartState {
     case "UPDATE_QUANTITY": {
       const updatedItems = state.items.map((item) =>
         item.id === action.payload.id ? { ...item, quantity: action.payload.quantity } : item
+      );
+      return calculateCartTotals({ ...state, items: updatedItems });
+    }
+    case "UPDATE_SIZE": {
+      const updatedItems = state.items.map((item) =>
+        item.id === action.payload.id ? { ...item, size: action.payload.size } : item
       );
       return calculateCartTotals({ ...state, items: updatedItems });
     }

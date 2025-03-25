@@ -6,7 +6,14 @@ import { Input } from "@/components/ui/input"
 import { useNavigate } from 'react-router-dom'
 import { useState } from "react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheets"
-import { useCart } from "./cart-provider"
+import { useCart, RING_SIZES, RingSize } from "./cart-provider"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export function CartSheet() {
   const navigate = useNavigate()
@@ -42,7 +49,33 @@ export function CartSheet() {
                 />
                 <div className="flex-1">
                   <h4 className="font-medium text-white">{item.name}</h4>
-                  <p className="text-sm text-gray-400">Size: {item.size}</p>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="text-sm text-gray-400">Size:</span>
+                    <Select
+                      value={item.size}
+                      onValueChange={(value: RingSize) =>
+                        dispatch({
+                          type: "UPDATE_SIZE",
+                          payload: { id: item.id, size: value },
+                        })
+                      }
+                    >
+                      <SelectTrigger className="w-20 bg-transparent text-white border-emerald-400/30 hover:border-emerald-400 transition-colors">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="bg-[#011614] border border-emerald-400/30">
+                        {RING_SIZES.map((size) => (
+                          <SelectItem 
+                            key={size} 
+                            value={size}
+                            className="text-white hover:bg-emerald-400/10 focus:bg-emerald-400/10 focus:text-white"
+                          >
+                            {size}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                   <div className="mt-2 flex items-center gap-2">
                     <Button
                       variant="outline"
@@ -109,10 +142,10 @@ export function CartSheet() {
                 <span>Shipping</span>
                 <span>${state.shipping}</span>
               </div> */}
-              {/* <div className="flex justify-between text-lg font-semibold text-white">
+              <div className="flex justify-between text-lg font-semibold text-white">
                 <span>Total</span>
-                <span>${state.total.toFixed(2)}</span>
-              </div> */}
+                <span>${state.total}</span>
+              </div>
             </div>
 
             <div className="mt-8 space-y-4 flex flex-row justify-between">

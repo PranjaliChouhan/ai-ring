@@ -3,9 +3,14 @@
 import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { useCart } from "./cart-provider"
-
-
+import { useCart, RING_SIZES, RingSize } from "./cart-provider"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export function CartSidebar() {
   const { state, dispatch } = useCart()
@@ -35,7 +40,33 @@ export function CartSidebar() {
               />
               <div className="flex-1">
                 <h4 className="font-medium text-white">{item.name}</h4>
-                <p className="text-sm text-gray-400">Size: {item.size}</p>
+                <div className="mt-2 flex items-center gap-2">
+                  <span className="text-sm text-gray-400">Size:</span>
+                  <Select
+                    value={item.size}
+                    onValueChange={(value: RingSize) =>
+                      dispatch({
+                        type: "UPDATE_SIZE",
+                        payload: { id: item.id, size: value },
+                      })
+                    }
+                  >
+                    <SelectTrigger className="w-20 bg-transparent text-white border-emerald-400/30 hover:border-emerald-400 transition-colors">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-[#132120] border border-emerald-400/30">
+                      {RING_SIZES.map((size) => (
+                        <SelectItem 
+                          key={size} 
+                          value={size}
+                          className="text-white hover:bg-emerald-400/10 focus:bg-emerald-400/10 focus:text-white"
+                        >
+                           {size}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
                 <div className="mt-2 flex items-center gap-2">
                   <Button
                     variant="outline"
@@ -70,7 +101,7 @@ export function CartSidebar() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="text-white"
+                    className="text-white hover:text-red-500"
                     onClick={() => dispatch({ type: "REMOVE_ITEM", payload: item.id })}
                   >
                     <X className="h-4 w-4" />
@@ -83,7 +114,7 @@ export function CartSidebar() {
 
         <div className="mt-8">
           <div className="flex items-center gap-2">
-            <Input placeholder="Discount Code" className="bg-transparent text-white" />
+            <Input placeholder="Discount Code" className="bg-transparent text-white border-emerald-400/30" />
             <Button variant="outline" className="border-emerald-400 text-emerald-400">
               Apply
             </Button>
@@ -102,10 +133,10 @@ export function CartSidebar() {
               <span>Shipping</span>
               <span>${state.shipping}</span>
             </div> */}
-            {/* <div className="flex justify-between text-lg font-semibold text-white">
+            <div className="flex justify-between text-lg font-semibold text-white">
               <span>Total</span>
               <span>${state.total}</span>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
