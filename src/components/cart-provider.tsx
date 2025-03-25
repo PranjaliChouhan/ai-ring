@@ -52,10 +52,10 @@ const initialState: CartState = {
     //   image: ring,
     // },
   ],
-  subtotal: 156,
-  tax: 15,
-  shipping: 27,
-  total: 198,
+  subtotal: 32, // Initial item price * quantity
+  tax: 3.2, // 10% of subtotal
+  shipping: 10, // Shipping is 10 when subtotal <= 100
+  total:32, // subtotal + tax + shipping
   isSidebarOpen: false, // ✅ Properly initialized
 };
 
@@ -89,7 +89,7 @@ function calculateCartTotals(state: CartState): CartState {
   const subtotal = state.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const tax = subtotal * 0.1; // 10% tax
   const shipping = subtotal > 100 ? 0 : 10; // Free shipping over $100
-  const total = subtotal + tax + shipping;
+  const total = subtotal;
 
   return { ...state, subtotal, tax, shipping, total };
 }

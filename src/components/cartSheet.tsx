@@ -1,64 +1,17 @@
 "use client"
 
-import {  Store, ChevronLeft, ChevronRight, Trash2, ArrowRight } from "lucide-react"
+import { Store, ChevronLeft, ChevronRight, Trash2, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useNavigate } from 'react-router-dom'
-import ring from "../assets/images/ring.png"
 import { useState } from "react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheets"
-
-interface CartItem {
-  id: string
-  name: string
-  size: string
-  price: number
-  quantity: number
-  image: string
-}
+import { useCart } from "./cart-provider"
 
 export function CartSheet() {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
-  const [items, setItems] = useState<CartItem[]>([
-    {
-      id: "1",
-      name: "Health-Ring",
-      size: "M",
-      price: 32,
-      quantity: 1,
-      image: ring,
-    },
-    // {
-    //   id: "2",
-    //   name: "Uniqlu Chino Pants - Black Stone",
-    //   size: "S",
-    //   price: 124,
-    //   quantity: 1,
-    //   image: ring,
-    // },
-  ])
-
-  const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0)
-  const tax = subtotal * 0.1
-  const shipping = 27
-  const total = subtotal + tax + shipping
-
-  const updateQuantity = (id: string, delta: number) => {
-    setItems(
-      items.map((item) => {
-        if (item.id === id) {
-          const newQuantity = Math.max(1, item.quantity + delta)
-          return { ...item, quantity: newQuantity }
-        }
-        return item
-      }),
-    )
-  }
-
-  const removeItem = (id: string) => {
-    setItems(items.filter((item) => item.id !== id))
-  }
+  const { state, dispatch } = useCart()
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -72,16 +25,13 @@ export function CartSheet() {
         <SheetHeader>
           <SheetTitle className="text-xl font-semibold text-white flex justify-between items-center">
             YOUR CART
-            {/* <Button variant="ghost" size="icon" className="text-white" onClick={() => setIsOpen(false)}>
-              <X className="h-6 w-6" />
-            </Button> */}
           </SheetTitle>
         </SheetHeader>
 
         <div className="mt-8">
           <h3 className="text-xl font-semibold text-white">List</h3>
           <div className="mt-4 space-y-6">
-            {items.map((item) => (
+            {state.items.map((item) => (
               <div key={item.id} className="flex items-start gap-4">
                 <img
                   src={item.image || "/placeholder.svg"}
@@ -98,7 +48,14 @@ export function CartSheet() {
                       variant="outline"
                       size="icon"
                       className="h-8 w-8 rounded-full border-emerald-400/30 text-black"
-                      onClick={() => updateQuantity(item.id, -1)}
+                      onClick={() => {
+                        if (item.quantity > 1) {
+                          dispatch({
+                            type: "UPDATE_QUANTITY",
+                            payload: { id: item.id, quantity: item.quantity - 1 },
+                          })
+                        }
+                      }}
                     >
                       <ChevronLeft className="h-4 w-4" />
                     </Button>
@@ -107,7 +64,12 @@ export function CartSheet() {
                       variant="outline"
                       size="icon"
                       className="h-8 w-8 rounded-full border-emerald-400/30 text-black"
-                      onClick={() => updateQuantity(item.id, 1)}
+                      onClick={() =>
+                        dispatch({
+                          type: "UPDATE_QUANTITY",
+                          payload: { id: item.id, quantity: item.quantity + 1 },
+                        })
+                      }
                     >
                       <ChevronRight className="h-4 w-4" />
                     </Button>
@@ -116,7 +78,7 @@ export function CartSheet() {
                       variant="ghost"
                       size="icon"
                       className="text-white hover:text-red-500"
-                      onClick={() => removeItem(item.id)}
+                      onClick={() => dispatch({ type: "REMOVE_ITEM", payload: item.id })}
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -137,46 +99,41 @@ export function CartSheet() {
             <div className="mt-8 space-y-2">
               <div className="flex justify-between text-white">
                 <span>Subtotal</span>
-                <span>${subtotal}</span>
+                <span>${state.subtotal}</span>
               </div>
-              <div className="flex justify-between text-white">
+              {/* <div className="flex justify-between text-white">
                 <span>Tax</span>
-                <span>${tax.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between text-white">
+                <span>${state.tax.toFixed(2)}</span>
+              </div> */}
+              {/* <div className="flex justify-between text-white">
                 <span>Shipping</span>
-                <span>${shipping}</span>
-              </div>
-              <div className="flex justify-between text-lg font-semibold text-white">
+                <span>${state.shipping}</span>
+              </div> */}
+              {/* <div className="flex justify-between text-lg font-semibold text-white">
                 <span>Total</span>
-                <span>${total.toFixed(2)}</span>
-              </div>
+                <span>${state.total.toFixed(2)}</span>
+              </div> */}
             </div>
 
             <div className="mt-8 space-y-4 flex flex-row justify-between">
-            <button
-               
-               className="w-full  text-white text-sm underline mt-2 -ml-10" 
-               onClick={() => setIsOpen(false)}
-             >
-               Continue Shopping
-             </button>
+              <button
+                className="w-full text-white text-sm underline mt-2 -ml-10" 
+                onClick={() => setIsOpen(false)}
+              >
+                Continue Shopping
+              </button>
               <Button
-                className=" bg-gradient-to-b from-[#24DBc9] to-[#278079] text-black rounded-full  "
+                className="bg-gradient-to-b from-[#24DBc9] to-[#278079] text-black rounded-full"
                 onClick={() => {
                   setIsOpen(false)
                   navigate("/checkout")
                 }}
               >
-                
-            
                 Checkout
                 <div className="bg-white rounded-full p-1 my-2 ml-2">
-                <ArrowRight className="h-4 w-4 " />
-                
-              </div>
+                  <ArrowRight className="h-4 w-4" />
+                </div>
               </Button>
-             
             </div>
           </div>
         </div>

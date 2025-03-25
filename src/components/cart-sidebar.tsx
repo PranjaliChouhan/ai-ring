@@ -94,18 +94,18 @@ export function CartSidebar() {
               <span>Subtotal</span>
               <span>${state.subtotal}</span>
             </div>
-            <div className="flex justify-between text-white">
+            {/* <div className="flex justify-between text-white">
               <span>Tax</span>
               <span>${state.tax}</span>
-            </div>
-            <div className="flex justify-between text-white">
+            </div> */}
+            {/* <div className="flex justify-between text-white">
               <span>Shipping</span>
               <span>${state.shipping}</span>
-            </div>
-            <div className="flex justify-between text-lg font-semibold text-white">
+            </div> */}
+            {/* <div className="flex justify-between text-lg font-semibold text-white">
               <span>Total</span>
               <span>${state.total}</span>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
