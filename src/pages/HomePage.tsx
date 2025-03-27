@@ -10,6 +10,7 @@ import { GallerySection } from "@/components/gallery-section";
 import { Hero } from "@/components/hero";
 import { ProductShowcase } from "@/components/product-showcase";
 import { StepsSection } from "@/components/step-section";
+import { FAQSection } from "@/components/faq-section";
 
 export function Homepage() {
   return (
@@ -21,6 +22,7 @@ export function Homepage() {
       {/* <FeaturesSection/> */}
       <StepsSection/>
       <GallerySection/>
+      <FAQSection/>
       <ContactSection/>
       <SiteFooter/>
     </section>

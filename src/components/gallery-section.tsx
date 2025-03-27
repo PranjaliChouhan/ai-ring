@@ -72,9 +72,9 @@ export function GallerySection() {
         </div>
 
         {/* Main Gallery */}
-        <div className="relative overflow-hidden rounded-2xl border border-emerald-400/20 shadow-xl shadow-emerald-900/20 max-w-5xl mx-auto aspect-[16/9]">
+        <div className="relative overflow-hidden rounded-2xl border border-emerald-400/20 shadow-xl shadow-emerald-900/20 max-w-5xl mx-auto bg-black/50">
           {/* Featured Image */}
-          <div className="relative h-full">
+          <div className="relative" style={{ paddingTop: '56.25%' }}> {/* 16:9 Aspect Ratio */}
             {galleryImages.map((image, index) => (
               <div
                 key={index}
@@ -82,11 +82,13 @@ export function GallerySection() {
                   index === activeIndex ? "opacity-100" : "opacity-0 pointer-events-none"
                 }`}
               >
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-full object-cover"
-                />
+                <div className="relative w-full h-full flex items-center justify-center bg-black">
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    className="max-w-full max-h-full w-auto h-auto object-contain"
+                  />
+                </div>
                 <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
                   <p className="text-white text-xl font-medium">{image.caption}</p>
                 </div>
@@ -141,11 +143,13 @@ export function GallerySection() {
                   : "border-transparent opacity-60 hover:opacity-100"
               }`}
             >
-              <img
-                src={image.src}
-                alt={`Thumbnail ${index + 1}`}
-                className="w-full h-full object-cover"
-              />
+              <div className="w-full h-full flex items-center justify-center bg-black">
+                <img
+                  src={image.src}
+                  alt={`Thumbnail ${index + 1}`}
+                  className="max-w-full max-h-full w-auto h-auto object-contain"
+                />
+              </div>
             </button>
           ))}
         </div>

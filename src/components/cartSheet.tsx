@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useNavigate } from 'react-router-dom'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheets"
-import { useCart, RING_SIZES, RingSize } from "./cart-provider"
+import { useCart, RING_SIZES, RingSize, RING_COLORS, RingColor } from "./cart-provider"
 import {
   Select,
   SelectContent,
@@ -50,32 +50,64 @@ export function CartSheet() {
                 />
                 <div className="flex-1">
                   <h4 className="font-medium text-white">{item.name}</h4>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="text-sm text-gray-400">Size:</span>
-                    <Select
-                      value={item.size}
-                      onValueChange={(value: RingSize) =>
-                        dispatch({
-                          type: "UPDATE_SIZE",
-                          payload: { id: item.id, size: value },
-                        })
-                      }
-                    >
-                      <SelectTrigger className="w-20 bg-transparent text-white border-emerald-400/30 hover:border-emerald-400 transition-colors">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-[#011614] border border-emerald-400/30">
-                        {RING_SIZES.map((size) => (
-                          <SelectItem 
-                            key={size} 
-                            value={size}
-                            className="text-white hover:bg-emerald-400/10 focus:bg-emerald-400/10 focus:text-white"
-                          >
-                            {size}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                  <div className="space-y-2 mt-1">
+                    {/* Size Dropdown */}
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-gray-400">Size:</span>
+                      <Select
+                        value={item.size}
+                        onValueChange={(value: RingSize) =>
+                          dispatch({
+                            type: "UPDATE_SIZE",
+                            payload: { id: item.id, size: value },
+                          })
+                        }
+                      >
+                        <SelectTrigger className="w-20 bg-transparent text-white border-emerald-400/30 hover:border-emerald-400 transition-colors">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="bg-[#011614] border border-emerald-400/30">
+                          {RING_SIZES.map((size) => (
+                            <SelectItem 
+                              key={size} 
+                              value={size}
+                              className="text-white hover:bg-emerald-400/10 focus:bg-emerald-400/10 focus:text-white"
+                            >
+                              {size}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Color Dropdown */}
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-gray-400">Color:</span>
+                      <Select
+                        value={item.color}
+                        onValueChange={(value: RingColor) =>
+                          dispatch({
+                            type: "UPDATE_COLOR",
+                            payload: { id: item.id, color: value },
+                          })
+                        }
+                      >
+                        <SelectTrigger className="w-24 bg-transparent text-white border-emerald-400/30 hover:border-emerald-400 transition-colors">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="bg-[#011614] border border-emerald-400/30">
+                          {RING_COLORS.map((color) => (
+                            <SelectItem 
+                              key={color} 
+                              value={color}
+                              className="text-white hover:bg-emerald-400/10 focus:bg-emerald-400/10 focus:text-white"
+                            >
+                              {color.charAt(0).toUpperCase() + color.slice(1)}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
                   <div className="mt-2 flex items-center gap-2">
                     <Button

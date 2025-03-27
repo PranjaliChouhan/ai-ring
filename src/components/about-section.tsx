@@ -5,7 +5,6 @@ import { ArrowLeft, ArrowRight } from "lucide-react"
 import { useState } from "react"
 import ring from "@/assets/images/ring.png"
 
-
 const slides = [
   {
     id: "01",
@@ -13,7 +12,7 @@ const slides = [
   },
   {
     id: "02",
-    text: "Tracks heart rate, oxygen levels, and sleep patterns, Offers real-time health insights.",
+    text: "Tracks heart rate, oxygen levels, and sleep patterns, while offering real-time health insights.",
   },
   {
     id: "03",
@@ -21,9 +20,11 @@ const slides = [
   },
   {
     id: "04",
-    text: "Lightweight yet highly robust design.Easy-to-use dashboard for tracking health .",
+    text: "Lightweight yet highly robust design. Easy-to-use dashboard for tracking health.",
   },
 ]
+
+
 
 export function AboutSection() {
   const [currentSlide, setCurrentSlide] = useState(0)

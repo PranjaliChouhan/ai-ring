@@ -2,26 +2,46 @@
 
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
+import { useCart } from "./cart-provider"
 
 const steps = [
   {
     number: "1",
     title: "Purchase your Healthring in our shop.",
-    description: "Purchase your Healthring in our shop."
+    description: "Purchase your Healthring in our shop.",
+    action: "cart"
   },
   {
     number: "2",
     title: "Download the Healthring app on your mobile device.",
-    description: "Download the Healthring app on your mobile device."
+    description: "Download the Healthring app on your mobile device.",
+    action: "app"
   },
   {
     number: "3",
     title: "Connect the Healthring to your app and enjoy!",
-    description: "Connect the Healthring to your app and enjoy!"
+    description: "Connect the Healthring to your app and enjoy!",
+    action: "faq"
   },
 ]
 
 export function StepsSection() {
+  const { dispatch } = useCart();
+
+  const handleStepClick = (action: string) => {
+    switch (action) {
+      case "cart":
+        dispatch({ type: "TOGGLE_SIDEBAR" });
+        break;
+      case "app":
+        window.open("https://apps.apple.com/pk/app/qring/id6473672621", "_blank");
+        break;
+      case "faq":
+        document.getElementById("faq")?.scrollIntoView({ behavior: "smooth" });
+        break;
+    }
+  };
+
   return (
     <section 
       className="relative py-16 md:py-24 overflow-hidden min-h-screen md:h-auto" 
@@ -47,9 +67,8 @@ export function StepsSection() {
             className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-wider text-white"
             style={{ fontFamily: "var(--font-heading)" }}
           >
-            Smart Tech,
-            <br />
-            Easy Use
+            Your Journey<br />
+            <span className="text-emerald-400">Starts Here</span>
           </h2>
         </div>
 
@@ -58,7 +77,8 @@ export function StepsSection() {
           {steps.map((step, index) => (
             <div
               key={index}
-              className="group relative p-6 md:p-8 mb-4 md:mb-0 rounded-2xl border border-emerald-400/20 bg-gradient-to-b from-emerald-400/10 to-transparent backdrop-blur-sm transition-all duration-300 hover:border-emerald-400/30 hover:bg-emerald-400/20"
+              onClick={() => handleStepClick(step.action)}
+              className="group relative p-6 md:p-8 mb-4 md:mb-0 rounded-2xl border border-emerald-400/20 bg-gradient-to-b from-emerald-400/10 to-transparent backdrop-blur-sm transition-all duration-300 hover:border-emerald-400/30 hover:bg-emerald-400/20 cursor-pointer"
             >
               <div className="space-y-3 md:space-y-4">
                 <p className="text-xl md:text-2xl font-light text-white">Step {step.number}</p>
@@ -71,7 +91,6 @@ export function StepsSection() {
                   <ArrowRight className="h-5 w-5 md:h-6 md:w-6" />
                 </Button>
               </div>
-              {/* <p className="text-red-500 font-medium mt-4 text-sm">{step.description}</p> */}
             </div>
           ))}
         </div>

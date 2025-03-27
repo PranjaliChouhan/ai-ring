@@ -7,11 +7,16 @@ import ring from "../assets/images/ring.png";
 export const RING_SIZES = ["7", "8", "9", "10", "11", "12"] as const;
 export type RingSize = typeof RING_SIZES[number];
 
+// Available ring colors
+export const RING_COLORS = ["black", "gold", "silver"] as const;
+export type RingColor = typeof RING_COLORS[number];
+
 interface CartItem {
   id: string;
   name: string;
   price: number;
   size: RingSize;
+  color: RingColor;
   quantity: number;
   image: string;
 }
@@ -22,7 +27,7 @@ interface CartState {
   tax: number;
   shipping: number;
   total: number;
-  isSidebarOpen: boolean; // ✅ Fixed incorrect syntax
+  isSidebarOpen: boolean;
 }
 
 type CartAction =
@@ -30,6 +35,7 @@ type CartAction =
   | { type: "REMOVE_ITEM"; payload: string }
   | { type: "UPDATE_QUANTITY"; payload: { id: string; quantity: number } }
   | { type: "UPDATE_SIZE"; payload: { id: string; size: RingSize } }
+  | { type: "UPDATE_COLOR"; payload: { id: string; color: RingColor } }
   | { type: "TOGGLE_SIDEBAR" }
   | { type: "CLOSE_SIDEBAR" };
 
@@ -45,32 +51,37 @@ const initialState: CartState = {
       name: "Health Ring",
       price: 31.99,
       size: "7" as RingSize,
+      color: "black" as RingColor,
       quantity: 1,
       image: ring,
-    },
-    // {
-    //   id: "2",
-    //   name: "Uniqlu Chino Pants - Black Stone",
-    //   price: 124,
-    //   size: "S",
-    //   quantity: 1,
-    //   image: ring,
-    // },
+    }
   ],
-  subtotal: 31.99, // Initial item price * quantity
-  tax: 3.2, // 10% of subtotal
-  shipping: 10, // Shipping is 10 when subtotal <= 100
-  total: 31.99, // subtotal + tax + shipping
-  isSidebarOpen: false, // ✅ Properly initialized
+  subtotal: 31.99,
+  tax: 3.2,
+  shipping: 10,
+  total: 31.99,
+  isSidebarOpen: false,
 };
 
 function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case "TOGGLE_SIDEBAR":
-      return { ...state, isSidebarOpen: !state.isSidebarOpen }; // ✅ Toggle sidebar
+      return { ...state, isSidebarOpen: !state.isSidebarOpen };
     case "CLOSE_SIDEBAR":
-      return { ...state, isSidebarOpen: false }; // ✅ Close sidebar
+      return { ...state, isSidebarOpen: false };
     case "ADD_ITEM": {
+      // Check if item already exists
+      const existingItem = state.items.find(item => item.name === action.payload.name);
+      if (existingItem) {
+        // Update existing item with new size and color
+        const updatedItems = state.items.map(item =>
+          item.name === action.payload.name
+            ? { ...item, size: action.payload.size, color: action.payload.color }
+            : item
+        );
+        return calculateCartTotals({ ...state, items: updatedItems });
+      }
+      // If item doesn't exist, add it
       const updatedItems = [...state.items, action.payload];
       return calculateCartTotals({ ...state, items: updatedItems });
     }
@@ -90,16 +101,21 @@ function cartReducer(state: CartState, action: CartAction): CartState {
       );
       return calculateCartTotals({ ...state, items: updatedItems });
     }
+    case "UPDATE_COLOR": {
+      const updatedItems = state.items.map((item) =>
+        item.id === action.payload.id ? { ...item, color: action.payload.color } : item
+      );
+      return calculateCartTotals({ ...state, items: updatedItems });
+    }
     default:
       return state;
   }
 }
 
-// ✅ Function to recalculate totals
 function calculateCartTotals(state: CartState): CartState {
   const subtotal = parseFloat(state.items.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2));
-  const tax = parseFloat((subtotal * 0.1).toFixed(2)); // 10% tax
-  const shipping = subtotal > 100 ? 0 : 10; // Free shipping over $100
+  const tax = parseFloat((subtotal * 0.1).toFixed(2));
+  const shipping = subtotal > 100 ? 0 : 10;
   const total = parseFloat(subtotal.toFixed(2));
 
   return { ...state, subtotal, tax, shipping, total };
