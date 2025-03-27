@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheets"
 import { CartSheet } from "../cartSheet"
 import logo from "@/assets/images/logo.png"
+import { useState } from "react"
 
 
 
@@ -18,6 +19,25 @@ const navigation = [
 ]
 
 export function SiteHeader() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    // Close the mobile menu
+    setMobileMenuOpen(false)
+    
+    // If it's a hash link, handle it to prevent default scrolling behavior
+    if (href.startsWith('#')) {
+      e.preventDefault()
+      const element = document.getElementById(href.substring(1))
+      if (element) {
+        // Small delay to allow the menu to close before scrolling
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }, 150)
+      }
+    }
+  }
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-black">
       <div className="container flex h-16 items-center">
@@ -27,7 +47,7 @@ export function SiteHeader() {
           </a>
 
           {/* Mobile Menu */}
-          <Sheet>
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" className="md:hidden text-white">
                 <Menu className="h-6 w-6" />
@@ -37,7 +57,12 @@ export function SiteHeader() {
             <SheetContent side="left" className="bg-black">
               <div className="flex flex-col space-y-4 text-white">
                 {navigation.map((item) => (
-                  <a key={item.name} href={item.href} className="hover:text-emerald-400 transition-colors">
+                  <a 
+                    key={item.name} 
+                    href={item.href} 
+                    className="hover:text-emerald-400 transition-colors"
+                    onClick={(e) => handleNavClick(e, item.href)}
+                  >
                     {item.name}
                   </a>
                 ))}
