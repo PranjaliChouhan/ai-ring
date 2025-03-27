@@ -7,7 +7,11 @@ import featuree from '../assets/images/Feature Card.png'
 import line1 from '../assets/images/Slider (1).png'
 import line2 from '../assets/images/Slider.png'
 import title from '../assets/images/Hero Text.png'
+import { useCart } from './cart-provider'
+
 export function Hero() {
+  const { dispatch } = useCart()
+
   return (
     <section className="relative min-h-screen overflow-hidden" id="about">
       <div className="absolute inset-0">
@@ -66,6 +70,7 @@ export function Hero() {
             <Button
               size="lg"
               className="rounded-full bg-gradient-to-b from-[#24DBc9] to-[#278079] text-black"
+              onClick={() => dispatch({ type: "TOGGLE_SIDEBAR" })}
             >
               Buy Now
             </Button>

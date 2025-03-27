@@ -6,6 +6,7 @@ import { ContactSection } from "@/components/contact-section";
 // import { FeaturesSection } from "@/components/feature-section";
 import { SiteFooter } from "@/components/Footer/footer";
 import { SiteHeader } from "@/components/Header/header";
+import { GallerySection } from "@/components/gallery-section";
 import { Hero } from "@/components/hero";
 import { ProductShowcase } from "@/components/product-showcase";
 import { StepsSection } from "@/components/step-section";
@@ -19,7 +20,7 @@ export function Homepage() {
       <ProductShowcase/>
       {/* <FeaturesSection/> */}
       <StepsSection/>
-
+      <GallerySection/>
       <ContactSection/>
       <SiteFooter/>
     </section>

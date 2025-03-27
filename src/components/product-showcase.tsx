@@ -7,7 +7,7 @@ const products = [
   {
     id: 1,
     name: "Perfection",
-    price: "134,9",
+    price: "31.99",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-02-03%20162750-pVItmSNjsOIkMw5HwUJeuHmzkYLeBV.png",
   },

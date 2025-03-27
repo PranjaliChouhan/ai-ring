@@ -4,7 +4,6 @@ import { Store, ChevronLeft, ChevronRight, Trash2, ArrowRight } from "lucide-rea
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useNavigate } from 'react-router-dom'
-import { useState } from "react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheets"
 import { useCart, RING_SIZES, RingSize } from "./cart-provider"
 import {
@@ -17,11 +16,13 @@ import {
 
 export function CartSheet() {
   const navigate = useNavigate()
-  const [isOpen, setIsOpen] = useState(false)
   const { state, dispatch } = useCart()
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+    <Sheet 
+      open={state.isSidebarOpen} 
+      onOpenChange={(open) => dispatch({ type: open ? "TOGGLE_SIDEBAR" : "CLOSE_SIDEBAR" })}
+    >
       <SheetTrigger asChild>
         <Button className="bg-gradient-to-b from-[#24DBc9] to-[#278079] text-black rounded-full">
           <Store className="mr-2 h-4 w-4" />
@@ -106,7 +107,7 @@ export function CartSheet() {
                     >
                       <ChevronRight className="h-4 w-4" />
                     </Button>
-                    <span className="ml-auto text-white">${item.price}</span>
+                    <span className="ml-auto text-white">${item.price.toFixed(2)}</span>
                     <Button
                       variant="ghost"
                       size="icon"
@@ -132,7 +133,7 @@ export function CartSheet() {
             <div className="mt-8 space-y-2">
               <div className="flex justify-between text-white">
                 <span>Subtotal</span>
-                <span>${state.subtotal}</span>
+                <span>${state.subtotal.toFixed(2)}</span>
               </div>
               {/* <div className="flex justify-between text-white">
                 <span>Tax</span>
@@ -144,21 +145,21 @@ export function CartSheet() {
               </div> */}
               <div className="flex justify-between text-lg font-semibold text-white">
                 <span>Total</span>
-                <span>${state.total}</span>
+                <span>${state.total.toFixed(2)}</span>
               </div>
             </div>
 
             <div className="mt-8 space-y-4 flex flex-row justify-between">
               <button
                 className="w-full text-white text-sm underline mt-2 -ml-10" 
-                onClick={() => setIsOpen(false)}
+                onClick={() => dispatch({ type: "CLOSE_SIDEBAR" })}
               >
                 Continue Shopping
               </button>
               <Button
                 className="bg-gradient-to-b from-[#24DBc9] to-[#278079] text-black rounded-full"
                 onClick={() => {
-                  setIsOpen(false)
+                  dispatch({ type: "CLOSE_SIDEBAR" })
                   navigate("/checkout")
                 }}
               >

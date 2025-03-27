@@ -20,7 +20,10 @@ export function CartSidebar() {
   return (
     <div className="fixed right-0 top-0 h-screen w-[400px] border-l border-white/10 bg- p-6 backdrop-blur bg-[#132120] ">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-white">YOUR CART</h2>
+        <div>
+          <h2 className="text-xl font-semibold text-white">YOUR CART</h2>
+          <p className="text-emerald-400/80 text-sm">Complete your HealthRing purchase</p>
+        </div>
         {/* <Button variant="ghost" size="icon" className="text-white" onClick={() => dispatch({ type: "CLOSE_SIDEBAR" })}>
           <X className="h-6 w-6" />
         </Button> */}
@@ -97,7 +100,7 @@ export function CartSidebar() {
                   >
                     +
                   </Button>
-                  <span className="ml-auto text-white">${item.price}</span>
+                  <span className="ml-auto text-white">${item.price.toFixed(2)}</span>
                   <Button
                     variant="ghost"
                     size="icon"
@@ -123,19 +126,19 @@ export function CartSidebar() {
           <div className="mt-8 space-y-2">
             <div className="flex justify-between text-white">
               <span>Subtotal</span>
-              <span>${state.subtotal}</span>
+              <span>${state.subtotal.toFixed(2)}</span>
             </div>
             {/* <div className="flex justify-between text-white">
               <span>Tax</span>
-              <span>${state.tax}</span>
+              <span>${state.tax.toFixed(2)}</span>
             </div> */}
             {/* <div className="flex justify-between text-white">
               <span>Shipping</span>
-              <span>${state.shipping}</span>
+              <span>${state.shipping.toFixed(2)}</span>
             </div> */}
             <div className="flex justify-between text-lg font-semibold text-white">
               <span>Total</span>
-              <span>${state.total}</span>
+              <span>${state.total.toFixed(2)}</span>
             </div>
           </div>
         </div>

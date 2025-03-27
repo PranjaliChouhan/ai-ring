@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import { Menu } from "lucide-react"
@@ -13,9 +11,9 @@ import logo from "@/assets/images/logo.png"
 
 const navigation = [
   { name: "About us", href: "/" },
- 
   { name: "Product", href: "#product" },
-  { name: "Features", href:"#features" },
+  { name: "How it works", href: "#how-it-works" },
+  { name: "Gallery", href: "#gallery" },
   { name: "Contact", href: "#contact" },
 ]
 

@@ -36,6 +36,7 @@
     "vite-plugin-svgr": "^4.2.0"
   },
   "devDependencies": {
+    "@peterek/vite-plugin-favicons": "^2.1.0",
     "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^20.11.2",
     "@types/react": "^18.2.43",

@@ -43,7 +43,7 @@ const initialState: CartState = {
     {
       id: "1",
       name: "Health Ring",
-      price: 32,
+      price: 31.99,
       size: "7" as RingSize,
       quantity: 1,
       image: ring,
@@ -57,10 +57,10 @@ const initialState: CartState = {
     //   image: ring,
     // },
   ],
-  subtotal: 32, // Initial item price * quantity
+  subtotal: 31.99, // Initial item price * quantity
   tax: 3.2, // 10% of subtotal
   shipping: 10, // Shipping is 10 when subtotal <= 100
-  total:32, // subtotal + tax + shipping
+  total: 31.99, // subtotal + tax + shipping
   isSidebarOpen: false, // ✅ Properly initialized
 };
 
@@ -97,10 +97,10 @@ function cartReducer(state: CartState, action: CartAction): CartState {
 
 // ✅ Function to recalculate totals
 function calculateCartTotals(state: CartState): CartState {
-  const subtotal = state.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const tax = subtotal * 0.1; // 10% tax
+  const subtotal = parseFloat(state.items.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2));
+  const tax = parseFloat((subtotal * 0.1).toFixed(2)); // 10% tax
   const shipping = subtotal > 100 ? 0 : 10; // Free shipping over $100
-  const total = subtotal;
+  const total = parseFloat(subtotal.toFixed(2));
 
   return { ...state, subtotal, tax, shipping, total };
 }
