@@ -1,0 +1,49 @@
+### Health Check
+GET http://localhost:4000/health
+
+### Get Stripe Publishable Key
+GET http://localhost:4000/api/payment/config
+
+### Create a Payment Intent
+POST http://localhost:4000/api/payment/create-payment-intent
+Content-Type: application/json
+
+{
+  "amount": 1999,
+  "currency": "usd",
+  "description": "Test payment",
+  "metadata": {
+    "order_id": "test-order-123",
+    "product_name": "Test Product"
+  }
+}
+
+### Get Payment Intent Status
+# Replace with an actual payment intent ID after creating one
+GET http://localhost:4000/api/payment/payment-intent/pi_XXXXXXXXXXXX
+
+### Cancel Payment Intent
+# Replace with an actual payment intent ID after creating one
+POST http://localhost:4000/api/payment/cancel-payment-intent/pi_XXXXXXXXXXXX
+Content-Type: application/json
+
+{
+  "cancellation_reason": "requested_by_customer"
+}
+
+### Create a Customer
+POST http://localhost:4000/api/payment/create-customer
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "name": "Test Customer",
+  "phone": "+12025550123",
+  "metadata": {
+    "user_id": "test-user-123"
+  }
+}
+
+### Get Customer Payment Methods
+# Replace with an actual customer ID after creating one
+GET http://localhost:4000/api/payment/customer/cus_XXXXXXXXXXXX/payment-methods 
